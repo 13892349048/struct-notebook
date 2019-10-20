@@ -1,0 +1,162 @@
+typedef int Elemtype;
+
+typedef struct Node
+{
+	Elemtype Data;
+	struct Node *next ;
+}Node;
+
+int Listlength(Node * Ptrl)
+{
+	Node * p = Ptrl;  //链表头
+	int j = 0;	
+
+	while (p)
+	{
+		p = p->next;
+		j++;
+	}
+
+	return j;
+}
+//查找第i位置
+Node * FindKey(int K, Node * Ptrl)
+{
+	Node * p = Ptrl;
+	int i = 1;
+
+	while (p != NULL && i < K)
+	{
+		p = p->next;
+		i++;
+	}
+
+	if (i == K)
+		return p;
+	else
+		return NULL;	
+}
+//在第i个结点前插入x
+Node * insert(Node * Ptrl, int i, Elemtype x)
+{
+	Node * p = NULL;
+	if (i == 1)
+	{
+		Node * q = (Node *)malloc(sizeof(Node));
+		q->Data = x;
+		q->next = Ptrl;
+		return q;
+	}
+
+	p = FindKey(i - 1, Ptrl);
+
+	if (p == NULL)
+	{
+		printf("参数错");
+		return NULL;
+	}
+	else
+	{
+		Node * q = (Node *)malloc(sizeof(Node));
+		q->Data = x;
+		q->next = p->next;
+		p->next = q;
+		return Ptrl;
+	}
+}
+
+//以下为堆栈
+typedef struct SqStack
+{
+	Elemtype data[MaxSize];
+	int tops;
+	int top;
+}SqStack;  //这只是一种类型 ****
+
+SqStack S;
+
+//栈
+typedef struct Stack
+{
+	Elemtype Data;
+	struct Stack *next;
+}Stack;
+
+Stack * CreatStack()
+{
+	Stack * S;
+	S = (Stack *)malloc(sizeof(Stack));
+	S->next = NULL;
+	return S;
+}
+
+//链表
+typedef struct PQNode
+{
+	ElemType Data;
+	struct PQNode *next;
+}PQNode;
+
+typedef struct LiNode
+{
+	struct PQNode *rear;
+	struct PQNode *front;
+}LiNode;
+
+ElemType DelQ(LiNode * PtrQ)
+{
+	PQNode *FrontCell;
+	ElemType FrontElem;
+
+	if (PtrQ->front == NULL)
+	{
+		printf("line empty");
+		return NULL;
+	}
+	else
+		FrontCell = PtrQ->front;
+	if (PtrQ->front == PtrQ->rear)//队列只有一个元素
+	{
+		PtrQ->front = PtrQ->rear = NULL;
+	}
+	else
+		PtrQ->front = PtrQ->front->next;
+	FrontElem = FrontCell->Data;
+	free(FrontCell);
+	
+	return FrontElem;
+}
+
+//二分法
+int BinarySearch(List * Tbl, Elemtype x)
+{
+	int left, mid, right;
+
+	left = 1;
+	right = Tbl->length;
+
+	while (left <= right)
+	{
+		mid = (left + right) / 2;
+		if (Tbl->Data[mid] < x)
+			left = mid + 1;
+		else if (Tbl->Data[mid] > x)
+			right = mid - 1;
+		else
+			return mid;
+	}
+	return NULL;
+}
+
+树
+先序遍历
+void PreOrderTraversal(BinTree * BT) //递归 访问路径一致同中序后序
+{
+	if (BT)
+	{
+		printf("%d", BT->Data);
+		PreOrderTraversal( BT->Left );
+		PreOrderTraversal( BT->right );
+	}
+	return;
+}
