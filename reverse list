@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <malloc.h>
+#include <stdlib.h>
+
+typedef struct Ptr
+{
+	int x;
+	struct Ptr *next;
+}*Ptr, ptr;
+
+Ptr Reverse(Ptr head, int K)//head链表头结点 K链表长
+{
+	int cnt;//要结束的地方
+	Ptr newb, oldb, tmp;
+
+	newb = head->next;
+	oldb = newb->next;
+
+	while (cnt < K)
+	{
+		tmp = oldb->next;
+		oldb->next = newb;
+		newb = oldb; oldb = tmp;
+	}
+	head->next->next = oldb;
+
+	return newb;
+}
